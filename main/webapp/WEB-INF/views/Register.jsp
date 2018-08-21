@@ -116,7 +116,7 @@
         		</div>
     		</c:if>
 		</spring:hasBindErrors>
-		<button type="button" class="btn btn-primary">Register</button>
+		<button type="submit" class="btn btn-primary">Register</button>
 		
 		</form>
 	</main>
