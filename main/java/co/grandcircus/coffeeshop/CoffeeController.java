@@ -24,15 +24,35 @@ public class CoffeeController {
 
 	@RequestMapping("/AddUser")
 	public ModelAndView showWelcomeCustomer (
-			@RequestParam("firstName") String firstName, 
-			@RequestParam("lastName") String lastName,
-			@RequestParam("emailAddress") String emailAddress,
-			@RequestParam("phoneNumber") String phoneNumber,
-			@RequestParam("password") String password) {
-		ModelAndView mav = new ModelAndView("AddUser");
-		mav.addObject("firstName", firstName);
-		//mav.addObject("word2", noun);
-		return mav;
+			@RequestParam(value="firstName", required=false) String firstName, 
+			@RequestParam(value="lastName", required=false) String lastName,
+			@RequestParam(value="emailAddress", required=false) String emailAddress,
+			@RequestParam(value="optinStatus", required=false) boolean optinStatus,
+			@RequestParam(value="phoneNumber", required=false) String phoneNumber,
+			@RequestParam(value="caffeine", required=false) boolean caffeine,
+			@RequestParam(value="race", required=false) String race,
+			@RequestParam(value="password", required=false) String password,
+			@RequestParam(value="passwordMatch", required=false) String passwordMatch) {
+	
+		
+			User user = new User();
+			user.setFirstName(firstName);
+			user.setLastName(lastName);
+			user.setEmailAddress(emailAddress);
+			user.setOptinStatus(optinStatus);
+			user.setPhoneNumber(phoneNumber);
+			user.setCaffeine(caffeine);
+			user.setRace(race);
+			user.setPassword(password);
+			user.setPasswordMatch(passwordMatch);
+			
+			ModelAndView mav = new ModelAndView("AddUser");
+			mav.addObject("user", user);
+			return mav;
+			
+			//if (password != passwordMatch) {
+			
+			//} else {//}
 	}
 
 }
