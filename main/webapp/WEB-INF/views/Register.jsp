@@ -22,7 +22,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<main class="container">
+	<main class="container" maxwidth = 400px>
 	
 	<h3>Please enter your information to register<br></h3><br>
 		

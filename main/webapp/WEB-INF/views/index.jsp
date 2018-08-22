@@ -11,10 +11,30 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div class="container">
 <h1>COFFEE <img src="/images/Coffee_cup.png"/>COFFEE <img src="/images/Coffee_cup.png"/>COFFEE!</h1>
 	<p>
 		Welcome to GC COFFEE 
 		<a href="/Register">Register!</a>
 	</p>
+	<p><b>Today's Menu</b></p>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Product</th><th>Price</th><th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="item" items="${items}">
+				<tr>
+					<td>${item.name}</td>
+					<td>${item.price}</td>
+					<td>${item.description}</td>
+				</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+	
 </body>
 </html>

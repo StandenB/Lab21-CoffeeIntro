@@ -1,5 +1,8 @@
 package co.grandcircus.coffeeshop;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -7,13 +10,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CoffeeController {
+	
+	@Autowired
+	private ItemsDao3 ItemsDao3;
+	
+	@Autowired
+	private UserDao3 UserDao3;
 
 	@RequestMapping("/")
 	public ModelAndView showHomePage() {
 		ModelAndView mav = new ModelAndView("index"); //corresponds to index.jsp
-//		mav.addObject("name", "Standen");
-//		mav.addObject("date", "Wednesday");
-		return mav;
+		List<Items> item = ItemsDao3.findAll();
+		return new ModelAndView("index", "items", item);
 	}
 
 	@RequestMapping("/Register")
@@ -46,6 +54,8 @@ public class CoffeeController {
 			user.setPassword(password);
 			user.setPasswordMatch(passwordMatch);
 			
+			UserDao3.create(user);
+			
 			ModelAndView mav = new ModelAndView("AddUser");
 			mav.addObject("user", user);
 			return mav;
@@ -56,15 +66,3 @@ public class CoffeeController {
 	}
 
 }
-//@RequestMapping("/madlib-story")
-//public ModelAndView showMadlibStory(
-//		@RequestParam("noun") String noun,
-//		@RequestParam("adj") String adj) {
-//	
-//	// `story` matches the name of the JSP file
-//	ModelAndView mav = new ModelAndView("story");
-//	// `word1` matches `${ word1 } in the JSP
-//	mav.addObject("word1", adj);
-//	mav.addObject("word2", noun);
-//	return mav;
-//}
