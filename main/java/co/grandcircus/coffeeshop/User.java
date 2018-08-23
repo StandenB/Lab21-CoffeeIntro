@@ -1,16 +1,38 @@
 package co.grandcircus.coffeeshop;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Entity
+@Table(name="users")
 public class User {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idusers;
+	@Column(name="first_name")
 	private String firstName;
+	@Column(name="last_name")
 	private String lastName;
+	@Column(name="email_address")
 	private String emailAddress;
+	@Column(name="optin_status", columnDefinition="TINYINT(1)")
 	private boolean optinStatus;
+	@Column(name="phone_number")
 	private String phoneNumber;
+	@Column(name="caffeine", columnDefinition="TINYINT(1)")
 	private boolean caffeine;
+	@Column(name="race")
 	private String race;
+	@Column(name="password")
 	private String password;
+	@Column(name="password_match")
 	private String passwordMatch;
 	
 	public User() {}

@@ -1,10 +1,26 @@
 package co.grandcircus.coffeeshop;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="items")
 public class Items {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+	@Column(name="name")
 	private String name;
+	@Column(name="description")
 	private String description;
+	@Column(name="quantity", columnDefinition="SMALLINT(6)")
 	private int quantity;
+	@Column(name="price", columnDefinition="FLOAT")
 	private double price;
 	
 	public Items() {}

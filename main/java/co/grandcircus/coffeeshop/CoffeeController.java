@@ -12,10 +12,17 @@ import org.springframework.web.servlet.ModelAndView;
 public class CoffeeController {
 	
 	@Autowired
-	private ItemsDao3 ItemsDao3;
+	ItemsDao3 ItemsDao3;
 	
 	@Autowired
-	private UserDao3 UserDao3;
+	UserDao3 UserDao3;
+	
+	@Autowired
+	UserAdminDao UserAdminDao;
+	
+	@Autowired
+	ItemsAdminDao ItemsAdminDao;
+	
 
 	@RequestMapping("/")
 	public ModelAndView showHomePage() {
@@ -27,6 +34,92 @@ public class CoffeeController {
 	@RequestMapping("/Register")
 	public ModelAndView showRegistrationForm() {
 		ModelAndView mav = new ModelAndView("Register");
+		return mav;
+	}
+	@RequestMapping("/AddItemForm")
+	public ModelAndView showAddItemForm() {
+		ModelAndView mav = new ModelAndView("AddItemForm");
+		return mav;
+	}
+	@RequestMapping("/AddUserForm")
+	public ModelAndView showAddUserForm() {
+		ModelAndView mav = new ModelAndView("AddUserForm");
+		return mav;
+	}
+	
+	@RequestMapping("/AdminUsers")
+	public ModelAndView showAdminUsersTable() {
+		List<User> user = UserDao3.findAll();
+		ModelAndView mav = new ModelAndView("AdminUsers", "users", user);
+		return mav;
+	}
+	@RequestMapping("/AdminItems")
+	public ModelAndView showAdminItemsTable() {
+		List<Items> item = ItemsDao3.findAll();
+		ModelAndView mav = new ModelAndView("AdminItems", "items", item);
+		return mav;
+	}
+	@RequestMapping("/AddItem")
+	public ModelAndView showAddItemForm(
+			@RequestParam(value="name", required=false) String name,
+			@RequestParam(value="price", required=false) Long price,
+			@RequestParam(value="quantity", required=false) Integer quantity,
+			@RequestParam(value="description", required=false) String description) {
+		
+		Items item = new Items();
+		item.setName(name);
+		item.setPrice(price);
+		item.setQuantity(quantity);
+		item.setDescription(description);
+		
+		ItemsDao3.create(item);
+		
+		ModelAndView mav = new ModelAndView("redirect:/AdminItems", "items", item);
+		return mav;
+	}
+	@RequestMapping("/NewUserSubmit")
+	public ModelAndView submitNewUser() {
+		ModelAndView mav = new ModelAndView("NewUserSubmit");
+		return mav;
+	}
+	@RequestMapping("/ConfirmDeleteItem")
+	public ModelAndView showConfirmDeleteItem() {
+		ModelAndView mav = new ModelAndView("ConfirmDeleteItem");
+		return mav;
+	}
+	@RequestMapping("/DeleteItem")
+	public ModelAndView removeItem(Long id) {
+		ItemsDao3.delete(id);
+		ModelAndView mav = new ModelAndView("redirect:/AdminItems");
+		return mav;
+	}
+	@RequestMapping("/DeleteUser")
+	public ModelAndView removeUser(Long id) {
+		UserDao3.delete(id);
+		ModelAndView mav = new ModelAndView("redirect:/AdminUsers");
+		return mav;
+	}
+	@RequestMapping("/ConfirmDeleteUser")
+	public ModelAndView showConfirmDeleteUser() {
+		ModelAndView mav = new ModelAndView("ConfirmDeleteUser");
+		return mav;
+	}
+	
+	@RequestMapping("/EditUser")
+	public ModelAndView showEditUserForm(
+			
+			) {
+		ModelAndView mav = new ModelAndView("EditUser");
+		return mav;
+	}
+	@RequestMapping("/EditItem")
+	public ModelAndView showEditItemForm(
+			@RequestParam(value="id", required=false) int id,
+			@RequestParam(value="name", required=false) String name,
+			@RequestParam(value="price", required=false) long price,
+			@RequestParam(value="quantity", required=false) int quantity,
+			@RequestParam(value="description", required=false) String description) {
+		ModelAndView mav = new ModelAndView("EditItem");
 		return mav;
 	}
 
@@ -42,7 +135,6 @@ public class CoffeeController {
 			@RequestParam(value="password", required=false) String password,
 			@RequestParam(value="passwordMatch", required=false) String passwordMatch) {
 	
-		
 			User user = new User();
 			user.setFirstName(firstName);
 			user.setLastName(lastName);
@@ -59,10 +151,26 @@ public class CoffeeController {
 			ModelAndView mav = new ModelAndView("AddUser");
 			mav.addObject("user", user);
 			return mav;
-			
-			//if (password != passwordMatch) {
-			
-			//} else {//}
 	}
-
+	@RequestMapping("/NewUserSubmit")
+	public ModelAndView showWelcomeCustomer (
+			@RequestParam(value="firstName", required=false) String firstName, 
+			@RequestParam(value="lastName", required=false) String lastName,
+			@RequestParam(value="emailAddress", required=false) String emailAddress,
+			@RequestParam(value="optinStatus", required=false) boolean optinStatus,
+			@RequestParam(value="phoneNumber", required=false) String phoneNumber) {
+	
+			User user = new User();
+			user.setFirstName(firstName);
+			user.setLastName(lastName);
+			user.setEmailAddress(emailAddress);
+			user.setOptinStatus(optinStatus);
+			user.setPhoneNumber(phoneNumber);
+			
+			UserDao3.create(user);
+			
+			ModelAndView mav = new ModelAndView("redirect:/AdminUsers");
+			mav.addObject("user", user);
+			return mav;
+	}
 }

@@ -22,10 +22,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<main class="container" maxwidth = 400px>
+	<main class="container" maxwidth = 300px>
 	
-	<h3>Please enter your information to register<br></h3><br>
-		
+	<h3>Please enter your information to register</h3><button><a href="/">BACK</a></button><br>
+		<br>
 	<form action="/AddUser" method="post" class="form">
 		<div class="form-group row">
 			<label for="firstName" class="col-sm-2 col-form-label">First Name:</label>
