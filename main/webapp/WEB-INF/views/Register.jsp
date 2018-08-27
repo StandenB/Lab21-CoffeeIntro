@@ -22,6 +22,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%@ include file="navbar.jsp" %>
 	<main class="container" maxwidth = 300px>
 	
 	<h3>Please enter your information to register</h3><button><a href="/">BACK</a></button><br>

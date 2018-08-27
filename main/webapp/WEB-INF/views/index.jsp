@@ -11,6 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%@ include file="navbar.jsp" %>
 <div class="container">
 <h1>COFFEE <img src="/images/Coffee_cup.png"/>COFFEE <img src="/images/Coffee_cup.png"/>COFFEE!</h1>
 	<p>

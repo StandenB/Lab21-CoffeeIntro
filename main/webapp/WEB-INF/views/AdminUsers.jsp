@@ -13,7 +13,7 @@
 		<button><a href="/AddUserForm">ADD NEW</a></button>
 		<button><a href="/">BACK</a></button>
 		</p>
-		
+		<form action="/EditUser" method="post" class="form">
 		<table class="table" table-responsive-md btn-table>
 			<thead class="black white-text">
 			
@@ -24,8 +24,8 @@
 			<tbody>
 				<c:forEach var="user" items="${users}">
 				<tr>
-					<td><button type="submit" formaction="/EditUser">EDIT</button></td>
-					<td><button type="submit" formaction="/ConfirmDeleteUser">DELETE</button></td>
+					<td><button type="submit" action="/EditUser/?id=${user.idusers}">EDIT</button></td>
+					<td><a type=button onclick="return confirm('Are you sure you want to delete?')" href="/DeleteUser/?id=${ user.idusers }">DELETE</a></td>
 					<td>${user.firstName}</td>
 					<td>${user.lastName}</td>
 					<td>${user.emailAddress}</td>
@@ -33,7 +33,8 @@
 				</tr>
 				</c:forEach>
 			</tbody>
-		</table>	
+		</table>
+		</form>	
 	</div>
 	
 </body>

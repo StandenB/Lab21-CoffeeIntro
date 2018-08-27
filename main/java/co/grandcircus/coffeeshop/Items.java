@@ -13,7 +13,7 @@ public class Items {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
+	private Long id;
 	@Column(name="name")
 	private String name;
 	@Column(name="description")
@@ -21,16 +21,25 @@ public class Items {
 	@Column(name="quantity", columnDefinition="SMALLINT(6)")
 	private int quantity;
 	@Column(name="price", columnDefinition="FLOAT")
-	private double price;
+	private float price;
 	
 	public Items() {}
 	
-	public Items(String name, String description, int quantity, double price) {
+	public Items(Long id, String name, String description, int quantity, float price) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.quantity = quantity;
 		this.price = price;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -57,11 +66,11 @@ public class Items {
 		this.quantity = quantity;
 	}
 
-	public double getPrice() {
+	public float getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 

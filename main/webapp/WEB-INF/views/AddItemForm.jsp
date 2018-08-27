@@ -38,7 +38,7 @@
 			<input class="form-control" name="description"/>
 			</div>
 		</div>
-		<button type="submit"><a href="/AdminItems">ADD NEW</a></button>
+		<button type="submit">ADD NEW</button>
 	</div>
 </body>
 </html>

@@ -37,9 +37,10 @@ public class User {
 	
 	public User() {}
 	
-	public User(String firstName, String lastName, String emailAddress, boolean optinStatus,
+	public User(Long idusers, String firstName, String lastName, String emailAddress, boolean optinStatus,
 			String phoneNumber, boolean caffeine, String race, String password) {
 		super();
+		this.idusers = idusers;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.emailAddress = emailAddress;
@@ -52,6 +53,14 @@ public class User {
 	}
 
 	
+
+	public Long getIdusers() {
+		return idusers;
+	}
+
+	public void setIdusers(Long idusers) {
+		this.idusers = idusers;
+	}
 
 	public boolean isCaffeine() {
 		return caffeine;

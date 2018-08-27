@@ -14,7 +14,7 @@
 		<button><a href="/AddItemForm">ADD NEW</a></button>
 		<button><a href="/">BACK</a></button>
 		</p>
-		
+		<form action="/EditItem" method="post" class="form">
 		<table class="table" table-responsive-md btn-table>
 			<thead class="black white-text">
 			
@@ -25,8 +25,8 @@
 			<tbody>
 				<c:forEach var="item" items="${items}">
 				<tr>
-					<td><button type="submit" formaction="/EditItem">EDIT</button></td>
-					<td><button type="submit" formaction="/ConfirmDeleteItem">DELETE</button></td>
+					<td><button type="submit" formaction="/EditItem/?id=${ item.id }">EDIT</button></td>
+					<td><a class = button onclick="return confirm('Are you sure you want to delete?')" href="/DeleteItem/?id=${ item.id }">DELETE</a></td>
 					<td>${item.name}</td>
 					<td>${item.price}</td>
 					<td>${item.quantity}</td>
@@ -34,11 +34,8 @@
 				</tr>
 				</c:forEach>
 			</tbody>
-		</table>	
+		</table>
+		</form>	
 	</div>
-	
-					
-	
-
 </body>
 </html>

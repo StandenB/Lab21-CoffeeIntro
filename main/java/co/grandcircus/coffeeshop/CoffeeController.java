@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -62,31 +64,22 @@ public class CoffeeController {
 	@RequestMapping("/AddItem")
 	public ModelAndView showAddItemForm(
 			@RequestParam(value="name", required=false) String name,
-			@RequestParam(value="price", required=false) Long price,
-			@RequestParam(value="quantity", required=false) Integer quantity,
+			@RequestParam(value="price", required=false) Float price,
+			@RequestParam(value="quantity", required=false) Long quantity,
 			@RequestParam(value="description", required=false) String description) {
 		
 		Items item = new Items();
 		item.setName(name);
-		item.setPrice(price);
-		item.setQuantity(quantity);
 		item.setDescription(description);
+		item.setQuantity(quantity);
+		item.setPrice(price);
 		
 		ItemsDao3.create(item);
 		
 		ModelAndView mav = new ModelAndView("redirect:/AdminItems", "items", item);
 		return mav;
 	}
-	@RequestMapping("/NewUserSubmit")
-	public ModelAndView submitNewUser() {
-		ModelAndView mav = new ModelAndView("NewUserSubmit");
-		return mav;
-	}
-	@RequestMapping("/ConfirmDeleteItem")
-	public ModelAndView showConfirmDeleteItem() {
-		ModelAndView mav = new ModelAndView("ConfirmDeleteItem");
-		return mav;
-	}
+	
 	@RequestMapping("/DeleteItem")
 	public ModelAndView removeItem(Long id) {
 		ItemsDao3.delete(id);
@@ -99,27 +92,46 @@ public class CoffeeController {
 		ModelAndView mav = new ModelAndView("redirect:/AdminUsers");
 		return mav;
 	}
-	@RequestMapping("/ConfirmDeleteUser")
-	public ModelAndView showConfirmDeleteUser() {
-		ModelAndView mav = new ModelAndView("ConfirmDeleteUser");
+	@RequestMapping("/EditUser")
+	public ModelAndView showEditUserForm(Long id) {
+		User user = UserDao3.findbyId(id);
+		ModelAndView mav = new ModelAndView("/EditUser");
+		mav.addObject("user", user);
 		return mav;
 	}
 	
-	@RequestMapping("/EditUser")
-	public ModelAndView showEditUserForm(
-			
-			) {
-		ModelAndView mav = new ModelAndView("EditUser");
+	@RequestMapping("/SubmitUserChanges")
+	public ModelAndView submitUserChanges (Long id,
+			@RequestParam(value="firstName", required=false) String firstName, 
+			@RequestParam(value="lastName", required=false) String lastName,
+			@RequestParam(value="emailAddress", required=false) String emailAddress,
+			@RequestParam(value="phoneNumber", required=false) String phoneNumber) {
+		User user = new User();
+		UserDao3.update(user);
+		ModelAndView mav = new ModelAndView("redirect:/AdminUsers");
 		return mav;
 	}
+//	@RequestMapping("/items/{id}/delete")
+//	public ModelAndView delete(@PathVariable("id") int id) {
+//		itemsDaoJPA.deleteById(id);
+	
 	@RequestMapping("/EditItem")
-	public ModelAndView showEditItemForm(
-			@RequestParam(value="id", required=false) int id,
+	public ModelAndView showEditItemForm(@PathVariable("id") Long id) {
+		Items item = ItemsDao3.findbyId(id);
+		ModelAndView mav = new ModelAndView("/EditItem");
+		mav.addObject("item", item);
+		return mav;
+	}
+
+	@RequestMapping("/SubmitItemChanges")
+	public ModelAndView submitItemChanges(Long id, 
 			@RequestParam(value="name", required=false) String name,
-			@RequestParam(value="price", required=false) long price,
-			@RequestParam(value="quantity", required=false) int quantity,
+			@RequestParam(value="price", required=false) Float price,
+			@RequestParam(value="quantity", required=false) Long quantity,
 			@RequestParam(value="description", required=false) String description) {
-		ModelAndView mav = new ModelAndView("EditItem");
+		Items item = new Items();
+		ItemsDao3.update(item);
+		ModelAndView mav = new ModelAndView("redirect:/AdminItems");
 		return mav;
 	}
 
@@ -153,7 +165,7 @@ public class CoffeeController {
 			return mav;
 	}
 	@RequestMapping("/NewUserSubmit")
-	public ModelAndView showWelcomeCustomer (
+	public ModelAndView submitNewCustomer (
 			@RequestParam(value="firstName", required=false) String firstName, 
 			@RequestParam(value="lastName", required=false) String lastName,
 			@RequestParam(value="emailAddress", required=false) String emailAddress,
